@@ -149,7 +149,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/古文/" style="font-size: 10px;">古文</a>
+                        <a href="/tags/msyql/" style="font-size: 10px;">msyql</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/trigger/" style="font-size: 10px;">trigger</a> <a href="/tags/古文/" style="font-size: 10px;">古文</a>
                     </div>
                 </section>
                 
@@ -242,6 +242,81 @@
     </div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-创建mysql触发器" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/05/09/创建mysql触发器/" class="article-date">
+      <time datetime="2016-05-09T14:18:59.000Z" itemprop="datePublished">2016-05-09</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/09/创建mysql触发器/">创建Mysql夸库触发器</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>因项目需要，对于数据库操作是需要在mysql中创建一个夸库的触发器，此为前提，但在在使用过程中，老是出错，在google上搜索了一个多小时才将问题解决。真是汗啊。</p>
+<h2 id="先了解下什么是触发器："><a href="#先了解下什么是触发器：" class="headerlink" title="先了解下什么是触发器："></a>先了解下什么是触发器：</h2><ul>
+<li>触发器（trigger）是个特殊的存储过程，它的执行不是由程序调用，也不是手工启动，而是由事件来触发，比如当对一个表进行操作（ insert，delete， update）时就会激活它执行。触发器经常用于加强数据的完整性约束和业务规则等。 触发器可以从 DBA_TRIGGERS ，USER_TRIGGERS 数据字典中查到。</li>
+<li>触发器有一个非常好的特性就是:触发器可以禁止或回滚违反引用完整性的更改，从而取消所尝试的数据修改。</li>
+</ul>
+<h2 id="需求描述："><a href="#需求描述：" class="headerlink" title="需求描述："></a>需求描述：</h2><ul>
+<li>同一服务器中有两个数据库database1、database2，database1 中有表table1（id,name），datebase2中有表table2(id,name,sex,age)。当数据库database2中表table2中插入一条新记录时，需要在database1库table1表中插入一条新记录new，并且这条新纪录的name = new.name。</li>
+<li>错误示范：环境mysql版本为5.7.11,数据库database2中的 sql 语句如下：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">DROP TRIGGER IF EXISTS table2_insert_trigger；</span><br><span class="line">CREATE TRIGGER table2_insert_trigger</span><br><span class="line">AFTER INSERT ON table2</span><br><span class="line">FOR EACH ROW</span><br><span class="line">BEGIN</span><br><span class="line">INSERT INTO database1.table1(name) VALUES(new.name);</span><br><span class="line">END</span><br></pre></td></tr></table></figure>
+<p>此代码总是报错，第五行处有语法错误，真是奇怪哈，当时我使出浑身解数，双眼盯着这几行sql看了个海枯石烂，天荒地老，即使盘古开天辟地女娲重新造人都没有看出结果来。心累。。。</p>
+<h2 id="mysql中的delimiter"><a href="#mysql中的delimiter" class="headerlink" title="mysql中的delimiter"></a>mysql中的delimiter</h2><p>delimiter 命令就是定义分隔符的意思，默认情况下，delimiter是分号;。在命令行客户端中，如果有一行命令以分号结束，那么回车后，MySQL将会执行该命令。如输入下面的语句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MySQL&gt; select * from test_table;</span><br></pre></td></tr></table></figure>
+<p>然后回车，那么MySQL将立即执行该语句。但有的时候我们不希望立即执行就比如上面的例子,当遇到 INSERT INTO database1.table1(name) VALUES(new.name);中的‘;’时，mysql语句立即执行，所以导致mysql语句在这一行有语法错误。默认情况下，delimiter “;” 用于向 MySQL 提交查询语句。在存储过程中每个 SQL 语句的结尾都有个 “;”，如果这时候，每逢 “;” 就向 MySQL 提交的话，当然会出问题了。</p>
+<h2 id="delimiter使用"><a href="#delimiter使用" class="headerlink" title="delimiter使用"></a>delimiter使用</h2><p>正确的mysql夸库触发器（trigger）使用代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">delimiter $$ #申明结束符为’$$‘,注意有空格</span><br><span class="line">DROP TRIGGER IF EXISTS table2_insert_trigger $$</span><br><span class="line">CREATE TRIGGER table2_insert_trigger</span><br><span class="line">AFTER INSERT ON table2</span><br><span class="line">FOR EACH ROW</span><br><span class="line">BEGIN</span><br><span class="line">INSERT INTO database1.table1(name) VALUES(new.name);</span><br><span class="line">END $$</span><br><span class="line">delimiter ; $$ #最后将结束符设为&apos;;&apos;</span><br></pre></td></tr></table></figure>
+<p>mysql 中常用的delimiter结束符设置有：’//‘、’$$‘,当然完全可以自己定义。</p>
+<h2 id="触发器的查询和删除"><a href="#触发器的查询和删除" class="headerlink" title="触发器的查询和删除"></a>触发器的查询和删除</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM information_schema.`TRIGGERS`; #查询</span><br><span class="line">DROP TRIGGER IF EXISTS &apos;triggerName&apos;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/msyql/">msyql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/trigger/">trigger</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-使用nodeJs-生成二维码" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -490,7 +565,7 @@
                 &copy; 2016 leibosite
             </div>
             <div class="footer-right">
-                <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/leibosite" target="_blank">spfk</a> by leibosite
+                <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/luuman/hexo-theme-spfk" target="_blank">spfk</a> by luuman
             </div>
         </div>
         

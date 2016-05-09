@@ -3,18 +3,24 @@
 <head>
   <meta charset="utf-8">
   
-  <title>About | leibosite&#39;s blog</title>
+  <title>创建Mysql夸库触发器 | leibosite&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="About">
-<meta property="og:url" content="https://leibosite.github.io/about/index.html">
+  <meta name="description" content="因项目需要，对于数据库操作是需要在mysql中创建一个夸库的触发器，此为前提，但在在使用过程中，老是出错，在google上搜索了一个多小时才将问题解决。真是汗啊。
+先了解下什么是触发器：
+触发器（trigger）是个特殊的存储过程，它的执行不是由程序调用，也不是手工启动，而是由事件来触发，比如当对一个表进行操作（ insert，delete， update）时就会激活它执行。触发器经常用于加强数据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="创建Mysql夸库触发器">
+<meta property="og:url" content="https://leibosite.github.io/2016/05/09/创建mysql触发器/index.html">
 <meta property="og:site_name" content="leibosite's blog">
-<meta property="og:description">
-<meta property="og:updated_time" content="2016-05-06T09:26:43.000Z">
+<meta property="og:description" content="因项目需要，对于数据库操作是需要在mysql中创建一个夸库的触发器，此为前提，但在在使用过程中，老是出错，在google上搜索了一个多小时才将问题解决。真是汗啊。
+先了解下什么是触发器：
+触发器（trigger）是个特殊的存储过程，它的执行不是由程序调用，也不是手工启动，而是由事件来触发，比如当对一个表进行操作（ insert，delete， update）时就会激活它执行。触发器经常用于加强数据">
+<meta property="og:updated_time" content="2016-05-09T15:34:39.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="About">
-<meta name="twitter:description">
+<meta name="twitter:title" content="创建Mysql夸库触发器">
+<meta name="twitter:description" content="因项目需要，对于数据库操作是需要在mysql中创建一个夸库的触发器，此为前提，但在在使用过程中，老是出错，在google上搜索了一个多小时才将问题解决。真是汗啊。
+先了解下什么是触发器：
+触发器（trigger）是个特殊的存储过程，它的执行不是由程序调用，也不是手工启动，而是由事件来触发，比如当对一个表进行操作（ insert，delete， update）时就会激活它执行。触发器经常用于加强数据">
   
     <link rel="alternative" href="/atom.xml" title="leibosite&#39;s blog" type="application/atom+xml">
   
@@ -39,7 +45,7 @@
           fancybox: true,
           animate: true,
           isHome: false,
-          isPost: false,
+          isPost: true,
           isArchive: false,
           isTag: false,
           isCategory: false,
@@ -239,11 +245,11 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="page-undefined" class="article article-type-page" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-创建mysql触发器" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/about/index.html" class="article-date">
-      <time datetime="2016-05-06T09:26:43.000Z" itemprop="datePublished">2016-05-06</time>
+      <a href="/2016/05/09/创建mysql触发器/" class="article-date">
+      <time datetime="2016-05-09T14:18:59.000Z" itemprop="datePublished">2016-05-09</time>
 </a>
     </div>
   
@@ -256,7 +262,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      About
+      创建Mysql夸库触发器
     </h1>
   
 
@@ -266,6 +272,10 @@
         
 
         
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/msyql/">msyql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/trigger/">trigger</a></li></ul>
+    </div>
+
         <div class="clearfix"></div>
       </div>
       
@@ -273,52 +283,92 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <style>
-    .article-meta {
-        display: none;
-    }
-    #container .article .article-title {
-        padding-right: 0;
-    }
-    .article-header {
-        padding: 0;
-        padding-top: 26px;
-        border-left: none;
-        text-align: center;
-    }
-    .article-header:hover {
-        border-left: none;
-    }
-    .article-title {
-        font-size: 1.6em
-    }
-    .article-meta {
-        display: none;
-    }
-    .article-entry hr {
-        margin: 0;
-    }
-    #container .article-info-post.article-info {
-      display: none;
-      }
-    #container .article .article-title {
-    padding: 0;
-    }
-</style>
+        <p>因项目需要，对于数据库操作是需要在mysql中创建一个夸库的触发器，此为前提，但在在使用过程中，老是出错，在google上搜索了一个多小时才将问题解决。真是汗啊。</p>
+<h2 id="先了解下什么是触发器："><a href="#先了解下什么是触发器：" class="headerlink" title="先了解下什么是触发器："></a>先了解下什么是触发器：</h2><ul>
+<li>触发器（trigger）是个特殊的存储过程，它的执行不是由程序调用，也不是手工启动，而是由事件来触发，比如当对一个表进行操作（ insert，delete， update）时就会激活它执行。触发器经常用于加强数据的完整性约束和业务规则等。 触发器可以从 DBA_TRIGGERS ，USER_TRIGGERS 数据字典中查到。</li>
+<li>触发器有一个非常好的特性就是:触发器可以禁止或回滚违反引用完整性的更改，从而取消所尝试的数据修改。</li>
+</ul>
+<h2 id="需求描述："><a href="#需求描述：" class="headerlink" title="需求描述："></a>需求描述：</h2><ul>
+<li>同一服务器中有两个数据库database1、database2，database1 中有表table1（id,name），datebase2中有表table2(id,name,sex,age)。当数据库database2中表table2中插入一条新记录时，需要在database1库table1表中插入一条新记录new，并且这条新纪录的name = new.name。</li>
+<li>错误示范：环境mysql版本为5.7.11,数据库database2中的 sql 语句如下：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">DROP TRIGGER IF EXISTS table2_insert_trigger；</span><br><span class="line">CREATE TRIGGER table2_insert_trigger</span><br><span class="line">AFTER INSERT ON table2</span><br><span class="line">FOR EACH ROW</span><br><span class="line">BEGIN</span><br><span class="line">INSERT INTO database1.table1(name) VALUES(new.name);</span><br><span class="line">END</span><br></pre></td></tr></table></figure>
+<p>此代码总是报错，第五行处有语法错误，真是奇怪哈，当时我使出浑身解数，双眼盯着这几行sql看了个海枯石烂，天荒地老，即使盘古开天辟地女娲重新造人都没有看出结果来。心累。。。</p>
+<h2 id="mysql中的delimiter"><a href="#mysql中的delimiter" class="headerlink" title="mysql中的delimiter"></a>mysql中的delimiter</h2><p>delimiter 命令就是定义分隔符的意思，默认情况下，delimiter是分号;。在命令行客户端中，如果有一行命令以分号结束，那么回车后，MySQL将会执行该命令。如输入下面的语句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MySQL&gt; select * from test_table;</span><br></pre></td></tr></table></figure>
+<p>然后回车，那么MySQL将立即执行该语句。但有的时候我们不希望立即执行就比如上面的例子,当遇到 INSERT INTO database1.table1(name) VALUES(new.name);中的‘;’时，mysql语句立即执行，所以导致mysql语句在这一行有语法错误。默认情况下，delimiter “;” 用于向 MySQL 提交查询语句。在存储过程中每个 SQL 语句的结尾都有个 “;”，如果这时候，每逢 “;” 就向 MySQL 提交的话，当然会出问题了。</p>
+<h2 id="delimiter使用"><a href="#delimiter使用" class="headerlink" title="delimiter使用"></a>delimiter使用</h2><p>正确的mysql夸库触发器（trigger）使用代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">delimiter $$ #申明结束符为’$$‘,注意有空格</span><br><span class="line">DROP TRIGGER IF EXISTS table2_insert_trigger $$</span><br><span class="line">CREATE TRIGGER table2_insert_trigger</span><br><span class="line">AFTER INSERT ON table2</span><br><span class="line">FOR EACH ROW</span><br><span class="line">BEGIN</span><br><span class="line">INSERT INTO database1.table1(name) VALUES(new.name);</span><br><span class="line">END $$</span><br><span class="line">delimiter ; $$ #最后将结束符设为&apos;;&apos;</span><br></pre></td></tr></table></figure>
+<p>mysql 中常用的delimiter结束符设置有：’//‘、’$$‘,当然完全可以自己定义。</p>
+<h2 id="触发器的查询和删除"><a href="#触发器的查询和删除" class="headerlink" title="触发器的查询和删除"></a>触发器的查询和删除</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM information_schema.`TRIGGERS`; #查询</span><br><span class="line">DROP TRIGGER IF EXISTS &apos;triggerName&apos;</span><br></pre></td></tr></table></figure>
 
-
-          
-        
       
     </div>
     
   </div>
   
     
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/05/09/创建mysql触发器/">创建Mysql夸库触发器</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 leibosite 的个人博客">leibosite</a></p>
+        <p><span>发布时间:</span>2016年05月09日 - 22时18分</p>
+        <p><span>最后更新:</span>2016年05月09日 - 23时34分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/05/09/创建mysql触发器/" title="创建Mysql夸库触发器">https://leibosite.github.io/2016/05/09/创建mysql触发器/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://leibosite.github.io/2016/05/09/创建mysql触发器/　　作者: leibosite" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
 
+
+
+<nav id="article-nav">
+  
+  
+    <a href="/2016/05/06/使用nodeJs-生成二维码/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">使用nodeJs 生成二维码</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
 
   
 </article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#先了解下什么是触发器："><span class="toc-number">1.</span> <span class="toc-text">先了解下什么是触发器：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#需求描述："><span class="toc-number">2.</span> <span class="toc-text">需求描述：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mysql中的delimiter"><span class="toc-number">3.</span> <span class="toc-text">mysql中的delimiter</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#delimiter使用"><span class="toc-number">4.</span> <span class="toc-text">delimiter使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#触发器的查询和删除"><span class="toc-number">5.</span> <span class="toc-text">触发器的查询和删除</span></a></li></ol>
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
+
+
 
 
 
@@ -339,7 +389,7 @@
     
       <div class="duoshuo" id="comments">
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="about/index.html" data-title="About" data-url="https://leibosite.github.io/about/index.html"></div>
+    <div class="ds-thread" data-thread-key="2016/05/09/创建mysql触发器/" data-title="创建Mysql夸库触发器" data-url="https://leibosite.github.io/2016/05/09/创建mysql触发器/"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">
@@ -359,6 +409,37 @@
     
 
 
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2016/05/06/使用nodeJs-生成二维码/" title="下一篇: 使用nodeJs 生成二维码">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/05/09/创建mysql触发器/">创建Mysql夸库触发器</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/06/使用nodeJs-生成二维码/">使用nodeJs 生成二维码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/05/兰亭集序/">兰亭集序</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/27/桃花源记/">桃花源记</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/26/hello-world/">Hello World</a></li></ul>
+    <script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
 
 
 
