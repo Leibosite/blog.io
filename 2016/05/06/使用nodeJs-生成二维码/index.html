@@ -5,21 +5,18 @@
   
   <title>使用nodeJs 生成二维码 | leibosite&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="nodeJs 生成二维码nodeJs 生成二维码的库有：121、qrcode [github](https://github.com/soldair/node-qrcode)2、qr-image [github](https://github.com/alexeyten/qr-image)
-介绍使用 qr-image 生成二维码优点123不需要任何依赖库可生成png、svg、eps、pdf格式的图">
+  <meta name="description" content="二维码的生成，以及在二维码中间添加图片">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用nodeJs 生成二维码">
 <meta property="og:url" content="https://leibosite.github.io/2016/05/06/使用nodeJs-生成二维码/index.html">
 <meta property="og:site_name" content="leibosite's blog">
-<meta property="og:description" content="nodeJs 生成二维码nodeJs 生成二维码的库有：121、qrcode [github](https://github.com/soldair/node-qrcode)2、qr-image [github](https://github.com/alexeyten/qr-image)
-介绍使用 qr-image 生成二维码优点123不需要任何依赖库可生成png、svg、eps、pdf格式的图">
+<meta property="og:description" content="二维码的生成，以及在二维码中间添加图片">
 <meta property="og:image" content="https://leibosite.github.io/images/githubQr.png">
 <meta property="og:image" content="https://leibosite.github.io/images/githubPicture.png">
-<meta property="og:updated_time" content="2016-05-06T08:45:33.000Z">
+<meta property="og:updated_time" content="2016-05-10T09:55:56.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用nodeJs 生成二维码">
-<meta name="twitter:description" content="nodeJs 生成二维码nodeJs 生成二维码的库有：121、qrcode [github](https://github.com/soldair/node-qrcode)2、qr-image [github](https://github.com/alexeyten/qr-image)
-介绍使用 qr-image 生成二维码优点123不需要任何依赖库可生成png、svg、eps、pdf格式的图">
+<meta name="twitter:description" content="二维码的生成，以及在二维码中间添加图片">
 <meta name="twitter:image" content="https://leibosite.github.io/images/githubQr.png">
   
     <link rel="alternative" href="/atom.xml" title="leibosite&#39;s blog" type="application/atom+xml">
@@ -283,7 +280,8 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h2 id="nodeJs-生成二维码"><a href="#nodeJs-生成二维码" class="headerlink" title="nodeJs 生成二维码"></a>nodeJs 生成二维码</h2><h3 id="nodeJs-生成二维码的库有："><a href="#nodeJs-生成二维码的库有：" class="headerlink" title="nodeJs 生成二维码的库有："></a>nodeJs 生成二维码的库有：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1、qrcode [github](https://github.com/soldair/node-qrcode)</span><br><span class="line">2、qr-image [github](https://github.com/alexeyten/qr-image)</span><br></pre></td></tr></table></figure>
+        <p>二维码的生成，以及在二维码中间添加图片<br><a id="more"></a></p>
+<h2 id="nodeJs-生成二维码"><a href="#nodeJs-生成二维码" class="headerlink" title="nodeJs 生成二维码"></a>nodeJs 生成二维码</h2><h3 id="nodeJs-生成二维码的库有："><a href="#nodeJs-生成二维码的库有：" class="headerlink" title="nodeJs 生成二维码的库有："></a>nodeJs 生成二维码的库有：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1、qrcode [github](https://github.com/soldair/node-qrcode)</span><br><span class="line">2、qr-image [github](https://github.com/alexeyten/qr-image)</span><br></pre></td></tr></table></figure>
 <h2 id="介绍使用-qr-image-生成二维码"><a href="#介绍使用-qr-image-生成二维码" class="headerlink" title="介绍使用 qr-image 生成二维码"></a>介绍使用 qr-image 生成二维码</h2><h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">不需要任何依赖库</span><br><span class="line">可生成png、svg、eps、pdf格式的图片</span><br><span class="line">支持UTF_8编码</span><br></pre></td></tr></table></figure>
 <h3 id="Usage："><a href="#Usage：" class="headerlink" title="Usage："></a>Usage：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install qr-image</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">介绍：</span><br><span class="line">//引入qr-image module</span><br><span class="line">var qr = require(&apos;qr-image&apos;); </span><br><span class="line">//生成‘https://leibosite.github.io’信息、png类型的二维码，默认为M</span><br><span class="line">var qr_svg = qr.image(&apos;https://leibosite.github.io&apos;, &#123; type: &apos;png&apos; &#125;);</span><br><span class="line">//将二维码输出到文件流，并生成github.png文件</span><br><span class="line">qr_svg.pipe(require(&apos;fs&apos;).createWriteStream(&apos;github.png&apos;));</span><br><span class="line"></span><br><span class="line">完整代码：</span><br><span class="line">var generatorQrImage  = function(qrInfo,qrPath)&#123;</span><br><span class="line"></span><br><span class="line">    var qr_svg = qr.image(qrInfo, &apos;H&apos;,&#123; type: &apos;png&apos; &#125;);</span><br><span class="line"></span><br><span class="line">    var qrPa = path.join(__dirname,qrPath);</span><br><span class="line"></span><br><span class="line">    qr_svg.pipe(fs.createWriteStream(qrPa));</span><br><span class="line">    fs.exists(qrPa,function(isExist)&#123;</span><br><span class="line">        if(isExist)&#123;</span><br><span class="line">            console.log(&apos;generator success!&apos;);</span><br><span class="line">        &#125;</span><br><span class="line">        console.log(&apos;generator fail&apos;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
@@ -305,7 +303,7 @@
         <p><span>本文标题:</span><a href="/2016/05/06/使用nodeJs-生成二维码/">使用nodeJs 生成二维码</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 leibosite 的个人博客">leibosite</a></p>
         <p><span>发布时间:</span>2016年05月06日 - 14时09分</p>
-        <p><span>最后更新:</span>2016年05月06日 - 16时45分</p>
+        <p><span>最后更新:</span>2016年05月10日 - 17时55分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/05/06/使用nodeJs-生成二维码/" title="使用nodeJs 生成二维码">https://leibosite.github.io/2016/05/06/使用nodeJs-生成二维码/</a>
             <span class="copy-path" data-clipboard-text="原文: https://leibosite.github.io/2016/05/06/使用nodeJs-生成二维码/　　作者: leibosite" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
