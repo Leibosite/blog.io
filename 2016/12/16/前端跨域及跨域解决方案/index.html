@@ -3,22 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>桃花源记 | leibosite&#39;s blog</title>
+  <title>前端跨域及跨域解决方案 | leibosite&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="朝代：魏晋作者：陶渊明原文：&amp;emsp;&amp;emsp;晋太元中，武陵人捕鱼为业。缘溪行，忘路之远近。忽逢桃花林，夹岸数百步，中无杂树，芳草鲜美，落英缤纷，渔人甚异之。复前行，欲穷其林。">
+  <meta name="description" content="前后端交互时经常受跨域问题的煎熬，不知道为什么会跨域，跨域是什么，最重要的还是，前后端程序员的知识结构不同，交流起来困难。时间消磨在交流上。最近正好遇到，所以略微总结了下，经供参考！">
 <meta property="og:type" content="article">
-<meta property="og:title" content="桃花源记">
-<meta property="og:url" content="https://leibosite.github.io/2016/05/10/桃花源记/index.html">
+<meta property="og:title" content="前端跨域及跨域解决方案">
+<meta property="og:url" content="https://leibosite.github.io/2016/12/16/前端跨域及跨域解决方案/index.html">
 <meta property="og:site_name" content="leibosite's blog">
-<meta property="og:description" content="朝代：魏晋作者：陶渊明原文：&amp;emsp;&amp;emsp;晋太元中，武陵人捕鱼为业。缘溪行，忘路之远近。忽逢桃花林，夹岸数百步，中无杂树，芳草鲜美，落英缤纷，渔人甚异之。复前行，欲穷其林。">
-<meta property="og:image" content="https://leibosite.github.io/images/taohuayuanji1.jpg">
-<meta property="og:image" content="https://leibosite.github.io/images/taohuayuanji.JPG">
-<meta property="og:image" content="https://leibosite.github.io/images/taohuayuanji2.jpg">
-<meta property="og:updated_time" content="2016-05-10T09:51:54.000Z">
+<meta property="og:description" content="前后端交互时经常受跨域问题的煎熬，不知道为什么会跨域，跨域是什么，最重要的还是，前后端程序员的知识结构不同，交流起来困难。时间消磨在交流上。最近正好遇到，所以略微总结了下，经供参考！">
+<meta property="og:updated_time" content="2016-12-16T05:50:53.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="桃花源记">
-<meta name="twitter:description" content="朝代：魏晋作者：陶渊明原文：&amp;emsp;&amp;emsp;晋太元中，武陵人捕鱼为业。缘溪行，忘路之远近。忽逢桃花林，夹岸数百步，中无杂树，芳草鲜美，落英缤纷，渔人甚异之。复前行，欲穷其林。">
-<meta name="twitter:image" content="https://leibosite.github.io/images/taohuayuanji1.jpg">
+<meta name="twitter:title" content="前端跨域及跨域解决方案">
+<meta name="twitter:description" content="前后端交互时经常受跨域问题的煎熬，不知道为什么会跨域，跨域是什么，最重要的还是，前后端程序员的知识结构不同，交流起来困难。时间消磨在交流上。最近正好遇到，所以略微总结了下，经供参考！">
   
     <link rel="alternative" href="/atom.xml" title="leibosite&#39;s blog" type="application/atom+xml">
   
@@ -245,11 +241,11 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-桃花源记" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-前端跨域及跨域解决方案" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/05/10/桃花源记/" class="article-date">
-      <time datetime="2016-05-10T07:58:54.000Z" itemprop="datePublished">2016-05-10</time>
+      <a href="/2016/12/16/前端跨域及跨域解决方案/" class="article-date">
+      <time datetime="2016-12-16T02:25:24.000Z" itemprop="datePublished">2016-12-16</time>
 </a>
     </div>
   
@@ -262,7 +258,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      桃花源记
+      前端跨域及跨域解决方案
     </h1>
   
 
@@ -272,10 +268,6 @@
         
 
         
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/古文/">古文</a></li></ul>
-    </div>
-
         <div class="clearfix"></div>
       </div>
       
@@ -283,11 +275,55 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h2 id="朝代：魏晋"><a href="#朝代：魏晋" class="headerlink" title="朝代：魏晋"></a>朝代：魏晋</h2><h2 id="作者：陶渊明"><a href="#作者：陶渊明" class="headerlink" title="作者：陶渊明"></a>作者：陶渊明</h2><h2 id="原文："><a href="#原文：" class="headerlink" title="原文："></a>原文：</h2><p>&emsp;&emsp;晋太元中，武陵人捕鱼为业。缘溪行，忘路之远近。忽逢桃花林，夹岸数百步，中无杂树，芳草鲜美，落英缤纷，渔人甚异之。复前行，欲穷其林。<br><a id="more"></a><br><img src="/images/taohuayuanji1.jpg" alt="桃花源记"></p>
-<p>&emsp;&emsp;林尽水源，便得一山，山有小口，仿佛若有光。便舍船，从口入。初极狭，才通人。复行数十步，豁然开朗。土地平旷，屋舍俨然，有良田美池桑竹之属。阡陌交通，鸡犬相闻。其中往来种作，男女衣着，悉如外人。黄发垂髫，并怡然自乐。<br><img src="/images/taohuayuanji.JPG" alt="桃花源记"></p>
-<p>&emsp;&emsp;见渔人，乃大惊，问所从来。具答之。便要还家，设酒杀鸡作食。村中闻有此人，咸来问讯。自云先世避秦时乱，率妻子邑人来此绝境，不复出焉，遂与外人间隔。问今是何世，乃不知有汉，无论魏晋。此人一一为具言所闻，皆叹惋。余人各复延至其家，皆出酒食。停数日，辞去。此中人语云：“不足为外人道也。”(间隔 一作：隔绝)</p>
-<p>&emsp;&emsp;既出，得其船，便扶向路，处处志之。及郡下，诣太守，说如此。太守即遣人随其往，寻向所志，遂迷，不复得路。</p>
-<p>&emsp;&emsp;南阳刘子骥，高尚士也，闻之，欣然规往。未果，寻病终，后遂无问津者。<br><img src="/images/taohuayuanji2.jpg" alt="桃花源记"></p>
+        <p>前后端交互时经常受跨域问题的煎熬，不知道为什么会跨域，跨域是什么，最重要的还是，前后端程序员的知识结构不同，交流起来困难。时间消磨在交流上。最近正好遇到，所以略微总结了下，经供参考！<br><a id="more"></a></p>
+<h2 id="什么是跨域"><a href="#什么是跨域" class="headerlink" title="什么是跨域"></a>什么是跨域</h2><p>出于安全考虑，浏览器会限制脚本中发起的跨域请求,使用 XMLHttpRequest 对象和Fetch发起 HTTP 请求就必须遵守同源策略。即：“URL的首部”指window.location.protocol +window.location.host必须相同，也可以理解为“Domains, protocols and ports must match”。</p>
+<p>跨源资源共享标准通过新增一系列 HTTP 头，让服务器能声明哪些来源可以通过浏览器访问该服务器上的资源。另外，对那些会对服务器数据造成破坏性影响的 HTTP 请求方法（特别是 GET 以外的 HTTP 方法，或者搭配某些MIME类型的POST请求），标准强烈要求浏览器必须先以 OPTIONS 请求方式发送一个预请求(preflight request)，从而获知服务器端对跨源请求所支持 HTTP 方法。在确认服务器允许该跨源请求的情况下，以实际的 HTTP 请求方法发送那个真正的请求。服务器端也可以通知客户端，是不是需要随同请求一起发送信用信息（包括 Cookies 和 HTTP 认证相关数据）。</p>
+<h2 id="XMLHttpRequest-对象"><a href="#XMLHttpRequest-对象" class="headerlink" title="XMLHttpRequest 对象"></a>XMLHttpRequest 对象</h2><p>XMLHttpRequest 对象用于在后台与服务器交换数据。开发者可通过XMLHttpRequest对象</p>
+<pre><code>* 在不重新加载页面的情况下更新网页
+* 在页面已加载后从服务器请求数据
+* 在页面已加载后从服务器接收数据
+* 在后台向服务器发送数据
+</code></pre><h2 id="访问控制场景"><a href="#访问控制场景" class="headerlink" title="访问控制场景"></a>访问控制场景</h2><h3 id="简单请求"><a href="#简单请求" class="headerlink" title="简单请求"></a>简单请求</h3><p>所谓的简单，是指：</p>
+<ul>
+<li>只使用 GET, HEAD 或者 POST 请求方法。如果使用 POST 向服务器端传送数据，则数据类型(Content-<br>Type)只能是 application/x-www-form-urlencoded, multipart/form-data 或 text/plain中的一种。</li>
+<li>不会使用自定义请求头（类似于 X-Modified 这种）。</li>
+</ul>
+<h3 id="预请求"><a href="#预请求" class="headerlink" title="预请求"></a>预请求</h3><p>不同于上面的简单请求，“预请求”要求必须先发送一个 OPTIONS 请求给目的站点，来查明这个跨站请求对于目的站点是不是安全可接受的。这样做，是因为跨站请求可能会对目的站点的数据造成破坏。 当请求具备以下条件，就会被当成预请求处理：</p>
+<ul>
+<li>请求以 GET, HEAD 或者 POST 以外的方法发起请求。或者，使用 POST，但请求数据为 application/<br>x-www-form-urlencoded, multipart/form-data 或者 text/plain 以外的数据类型。比如说，用 POST 发送数据类型为 application/xml 或者 text/xml 的 XML 数据的请求。</li>
+<li>使用自定义请求头（比如添加诸如 X-PINGOTHER）</li>
+</ul>
+<p><strong> 在这种情况时，后台的应用程序（比如express）必须处理OPTIONS请求或者添加一下代码</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">app.all(&apos;*&apos;, function(req, res, next) &#123;</div><div class="line">  res.header(&quot;Access-Control-Allow-Origin&quot;, &quot;*&quot;);// 允许跨域</div><div class="line">  res.header(&quot;Access-Control-Allow-Headers&quot;, &quot;Content-Type,Content-Length, Authorization, Accept,X-Requested-With&quot;);//允许请求的数据类型</div><div class="line">  res.header(&quot;Access-Control-Allow-Methods&quot;,&quot;PUT,POST,GET,DELETE,OPTIONS&quot;);//允许的数据请求方法</div><div class="line">  res.header(&quot;Access-Control-Max-Age&quot;,3600 * 24);//预请求结果有效期</div><div class="line">  next();</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h3 id="附带证书请求"><a href="#附带证书请求" class="headerlink" title="附带证书请求"></a>附带证书请求</h3><p>XMLHttpRequest和访问控制功能，最有趣的特性就是，发送凭证请求（HTTP Cookies和验证信息）的功能。一般而言，对于跨站请求，浏览器是不会发送凭证信息的。但如果将XMLHttpRequest的一个特殊标志位设置为true，浏览器就将允许该请求的发送。</p>
+<h2 id="跨域解决方案"><a href="#跨域解决方案" class="headerlink" title="跨域解决方案"></a>跨域解决方案</h2><ul>
+<li>思路一：含有src或href属性的标签都是可以跨域的（eg:img、script、iframe、link等），使用这个思路可以有很多种跨域的方法</li>
+<li>思路二：使用CORS，W3C的一个标准，全称“跨域资源共享”（Crocs-origin resource sharing）<h3 id="通过jsonp跨域"><a href="#通过jsonp跨域" class="headerlink" title="通过jsonp跨域"></a>通过jsonp跨域</h3></li>
+<li>原理：script是可以跨域的，而且在跨域脚本中可以直接回调当前脚本的函数。</li>
+<li>限制：需要创建一个DOM对象并且添加到DOM树，只能用于GET方法</li>
+</ul>
+<p>JSONP利用的是script可以跨域的特性，跨域URL返回的脚本不仅包含数据，还包含一个回调：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">// URL: http://b.a.com/foo</div><div class="line">var data = &#123;</div><div class="line">   	foo: &apos;bar&apos;,</div><div class="line">   	bar: &apos;foo&apos;</div><div class="line">&#125;;</div><div class="line">callback(data);</div></pre></td></tr></table></figure></p>
+<p>然后在我们在主站<a href="http://a.com中，可以这样来跨域获取http://b.a.com的数据：" target="_blank" rel="external">http://a.com中，可以这样来跨域获取http://b.a.com的数据：</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">// URL: http://a.com/foo</div><div class="line">var callback = function(data)&#123;</div><div class="line">  	 // 处理跨域请求得到的数据</div><div class="line">&#125;;</div><div class="line">var script = $(&apos;&lt;script&gt;&apos;, &#123;src: &apos;http://b.a.com/bar&apos;&#125;);</div><div class="line">$(&apos;body&apos;).append(script);</div></pre></td></tr></table></figure>
+<p>其实jQuery已经封装了JSONP得使用，我们可以这样来</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$.getJSON( &quot;http://b.a.com/bar?callback=callback&quot;, function( data )&#123;</div><div class="line">   	// 处理跨域请求得到的数据</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h3 id="通过iframe、img跨域"><a href="#通过iframe、img跨域" class="headerlink" title="通过iframe、img跨域"></a>通过iframe、img跨域</h3><ul>
+<li>原理：所有具有src属性的HTML标签都是可以跨域的，包括img, script</li>
+<li>限制：需要创建一个DOM对象，只能用于GET方法</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var img = new Image();</div><div class="line">img.src = &apos;http://some/picture&apos;;        // 发送HTTP请求</div><div class="line"></div><div class="line">var ifr = $(&apos;&lt;iframe&gt;&apos;, &#123;src: &apos;http://b.a.com/bar&apos;&#125;);</div><div class="line">$(&apos;body&apos;).append(ifr);    	              // 发送HTTP请求</div></pre></td></tr></table></figure>
+<h3 id="通过CORS"><a href="#通过CORS" class="headerlink" title="通过CORS"></a>通过CORS</h3><ul>
+<li>原理：服务器设置Access-Control-Allow-OriginHTTP响应头之后，浏览器将会允许跨域请求</li>
+<li>限制：浏览器需要支持HTML5，可以支持POST，PUT等方法</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Access-Control-Allow-Origin: *              # 允许所有域名访问，或者</div><div class="line">Access-Control-Allow-Origin: http://a.com   # 只允许所有域名访问</div></pre></td></tr></table></figure>
+<h3 id="window-postMessage"><a href="#window-postMessage" class="headerlink" title="window.postMessage"></a>window.postMessage</h3><ul>
+<li>原理：HTML5允许窗口之间发送消息</li>
+<li>限制：浏览器需要支持HTML5，获取窗口句柄后才能相互通信</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">// URL: http://a.com/foo</div><div class="line">var win = window.open(&apos;http://b.com/bar&apos;);</div><div class="line">win.postMessage(&apos;Hello, bar!&apos;, &apos;http://b.com&apos;); </div><div class="line"></div><div class="line">// URL: http://b.com/bar</div><div class="line">   window.addEventListener(&apos;message&apos;,function(event) &#123;</div><div class="line">  	 	console.log(event.data);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>在HTML5之前，JSONP已经成为跨域的事实标准了，jQuery都给出了支持。 值得注意的是它只是Hack，并没有产生额外的安全问题。 因为JSONP要成功获取数据，需要跨域资源所在服务器的配合，比如资源所在服务器需要自愿地回调一个合适的函数，所以服务器仍然有能力控制资源的跨域访问。</p>
+<p>跨域的正道还是要使用HTML5提供的CORS头字段以及window.postMessage， 可以支持POST, PUT等HTTP方法，从机制上解决跨域问题。 值得注意的是Access-Control-Allow-Origin头字段是资源所在服务器设置的， 访问控制的责任仍然是在提供资源的服务器一方，这和JSONP是一样的。</p>
 
       
     </div>
@@ -296,13 +332,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/05/10/桃花源记/">桃花源记</a></p>
+        <p><span>本文标题:</span><a href="/2016/12/16/前端跨域及跨域解决方案/">前端跨域及跨域解决方案</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 leibosite 的个人博客">leibosite</a></p>
-        <p><span>发布时间:</span>2016年05月10日 - 15时58分</p>
-        <p><span>最后更新:</span>2016年05月10日 - 17时51分</p>
+        <p><span>发布时间:</span>2016年12月16日 - 10时25分</p>
+        <p><span>最后更新:</span>2016年12月16日 - 13时50分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/05/10/桃花源记/" title="桃花源记">https://leibosite.github.io/2016/05/10/桃花源记/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://leibosite.github.io/2016/05/10/桃花源记/　　作者: leibosite" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/12/16/前端跨域及跨域解决方案/" title="前端跨域及跨域解决方案">https://leibosite.github.io/2016/12/16/前端跨域及跨域解决方案/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://leibosite.github.io/2016/12/16/前端跨域及跨域解决方案/　　作者: leibosite" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -315,18 +351,9 @@
 
 <nav id="article-nav">
   
-    <a href="/2016/05/14/redis-单例服务器搭建/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          Redis 单例服务器搭建
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/05/09/创建mysql触发器/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">创建 Mysql 跨库触发器</div>
+    <a href="/2016/09/26/redis_集群优点/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title"></div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -337,7 +364,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#朝代：魏晋"><span class="toc-number">1.</span> <span class="toc-text">朝代：魏晋</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#作者：陶渊明"><span class="toc-number">2.</span> <span class="toc-text">作者：陶渊明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原文："><span class="toc-number">3.</span> <span class="toc-text">原文：</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是跨域"><span class="toc-number">1.</span> <span class="toc-text">什么是跨域</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XMLHttpRequest-对象"><span class="toc-number">2.</span> <span class="toc-text">XMLHttpRequest 对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#访问控制场景"><span class="toc-number">3.</span> <span class="toc-text">访问控制场景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#简单请求"><span class="toc-number">3.1.</span> <span class="toc-text">简单请求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#预请求"><span class="toc-number">3.2.</span> <span class="toc-text">预请求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#附带证书请求"><span class="toc-number">3.3.</span> <span class="toc-text">附带证书请求</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#跨域解决方案"><span class="toc-number">4.</span> <span class="toc-text">跨域解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#通过jsonp跨域"><span class="toc-number">4.1.</span> <span class="toc-text">通过jsonp跨域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#通过iframe、img跨域"><span class="toc-number">4.2.</span> <span class="toc-text">通过iframe、img跨域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#通过CORS"><span class="toc-number">4.3.</span> <span class="toc-text">通过CORS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#window-postMessage"><span class="toc-number">4.4.</span> <span class="toc-text">window.postMessage</span></a></li></ol></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
@@ -385,7 +412,7 @@
     
       <div class="duoshuo" id="comments">
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="2016/05/10/桃花源记/" data-title="桃花源记" data-url="https://leibosite.github.io/2016/05/10/桃花源记/"></div>
+    <div class="ds-thread" data-thread-key="2016/12/16/前端跨域及跨域解决方案/" data-title="前端跨域及跨域解决方案" data-url="https://leibosite.github.io/2016/12/16/前端跨域及跨域解决方案/"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">
@@ -408,13 +435,11 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/05/14/redis-单例服务器搭建/" title="上一篇: Redis 单例服务器搭建">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a href="/2016/05/09/创建mysql触发器/" title="下一篇: 创建 Mysql 跨库触发器">
+            <a href="/2016/09/26/redis_集群优点/" title="下一篇: ">
                 <i class="fa fa-angle-right"></i>
             </a>
         
