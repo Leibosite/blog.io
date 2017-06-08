@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Git Ssh和https授权 | leibosite&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在本地计算机与GitHub（或GitLab）进行通信时，传输主要基于两种协议，HTTPS和SSH，对应的仓库地址就是HTTPS URLs和SSH URLs。
+首先需要强调的是，HTTPS URLs和SSH URLs对应的是两套完全独立的权限校验方式，主要的区别就是HTTPS URLs采用账号密码进行校验，SSH URLs采用SSH秘钥对进行校验。平时使用的时候我们可以根据实际情况，选择一种即可。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git Ssh和https授权">
+<meta property="og:url" content="https://leibosite.github.io/2017/06/08/git-ssh和https授权/index.html">
+<meta property="og:site_name" content="leibosite's blog">
+<meta property="og:description" content="在本地计算机与GitHub（或GitLab）进行通信时，传输主要基于两种协议，HTTPS和SSH，对应的仓库地址就是HTTPS URLs和SSH URLs。
+首先需要强调的是，HTTPS URLs和SSH URLs对应的是两套完全独立的权限校验方式，主要的区别就是HTTPS URLs采用账号密码进行校验，SSH URLs采用SSH秘钥对进行校验。平时使用的时候我们可以根据实际情况，选择一种即可。">
+<meta property="og:updated_time" content="2017-06-08T10:50:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Git Ssh和https授权">
+<meta name="twitter:description" content="在本地计算机与GitHub（或GitLab）进行通信时，传输主要基于两种协议，HTTPS和SSH，对应的仓库地址就是HTTPS URLs和SSH URLs。
+首先需要强调的是，HTTPS URLs和SSH URLs对应的是两套完全独立的权限校验方式，主要的区别就是HTTPS URLs采用账号密码进行校验，SSH URLs采用SSH秘钥对进行校验。平时使用的时候我们可以根据实际情况，选择一种即可。">
+  
+    <link rel="alternative" href="/atom.xml" title="leibosite&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/head1.jpeg" class="js-avatar">
+            
+        </a>
+
+        <hgroup>
+          <h1 class="header-author"><a href="/">leibosite</a></h1>
+        </hgroup>
+
+        
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">博客首页</a></li>
+                        
+                            <li><a href="/">作品展示</a></li>
+                        
+                            <li><a href="/about">留言打卡</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl mail" target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=PgcHCQcNDAgGCH5PTxBdUVM" title="mail">mail</a>
+                            
+                                <a class="fl github" target="_blank" href="https://github.com/leibosite" title="github">github</a>
+                            
+                                <a class="fl zhihu" target="_blank" href="https://www.zhihu.com/people/leibosite" title="zhihu">zhihu</a>
+                            
+                                <a class="fl weibo" target="_blank" href="http://t.qq.com/d997932686" title="weibo">weibo</a>
+                            
+                                <a class="fl google" target="_blank" href="/www.google.com" title="google">google</a>
+                            
+                                <a class="fl twitter" target="_blank" href="https://twitter.com" title="twitter">twitter</a>
+                            
+                                <a class="fl facebook" target="_blank" href="https://zh-cn.facebook.com" title="facebook">facebook</a>
+                            
+                                <a class="fl rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/Mocha/" style="font-size: 10px;">Mocha</a> <a href="/tags/git/" style="font-size: 20px;">git</a> <a href="/tags/javaScript/" style="font-size: 10px;">javaScript</a> <a href="/tags/msyql/" style="font-size: 10px;">msyql</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/nodeJs/" style="font-size: 10px;">nodeJs</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/trigger/" style="font-size: 10px;">trigger</a> <a href="/tags/前端/" style="font-size: 10px;">前端</a> <a href="/tags/古文/" style="font-size: 10px;">古文</a> <a href="/tags/富爸爸/" style="font-size: 10px;">富爸爸</a> <a href="/tags/财务知识/" style="font-size: 10px;">财务知识</a> <a href="/tags/跨域/" style="font-size: 10px;">跨域</a>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://MOxFIVE.github.io/">MOxFIVE</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.vsay.cn/">DoubleV</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.ccwebsite.com/">兮兮</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.dandyweng.com/">翁天信</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.plqblog.com/views/index.php">潘利强</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.hankin.cn/">hankin</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.waydrow.com/">waydrow</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://lemostic.github.io">Lemostic</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">爱运动、爱交友、爱旅行、喜欢接触新鲜事物、迎接新的挑战，更爱游离于错综复杂的编码与逻辑中</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">leibosite</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/head1.jpeg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">leibosite</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">博客首页</a></li>
+                
+                    <li><a href="/">作品展示</a></li>
+                
+                    <li><a href="/about">留言打卡</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="mail" target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=PgcHCQcNDAgGCH5PTxBdUVM" title="mail">mail</a>
+                    
+                        <a class="github" target="_blank" href="https://github.com/leibosite" title="github">github</a>
+                    
+                        <a class="zhihu" target="_blank" href="https://www.zhihu.com/people/leibosite" title="zhihu">zhihu</a>
+                    
+                        <a class="weibo" target="_blank" href="http://t.qq.com/d997932686" title="weibo">weibo</a>
+                    
+                        <a class="google" target="_blank" href="/www.google.com" title="google">google</a>
+                    
+                        <a class="twitter" target="_blank" href="https://twitter.com" title="twitter">twitter</a>
+                    
+                        <a class="facebook" target="_blank" href="https://zh-cn.facebook.com" title="facebook">facebook</a>
+                    
+                        <a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-git-ssh和https授权" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/06/08/git-ssh和https授权/" class="article-date">
+      <time datetime="2017-06-08T10:48:38.000Z" itemprop="datePublished">2017-06-08</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Git Ssh和https授权
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>在本地计算机与GitHub（或GitLab）进行通信时，传输主要基于两种协议，HTTPS和SSH，对应的仓库地址就是HTTPS URLs和SSH URLs。</p>
+<p>首先需要强调的是，HTTPS URLs和SSH URLs对应的是两套完全独立的权限校验方式，主要的区别就是HTTPS URLs采用账号密码进行校验，SSH URLs采用SSH秘钥对进行校验。平时使用的时候我们可以根据实际情况，选择一种即可。<br><a id="more"></a></p>
+<h2 id="HTTPS-URLs"><a href="#HTTPS-URLs" class="headerlink" title="HTTPS URLs"></a>HTTPS URLs</h2><p>GitHub官方推荐采用HTTPS URLs的方式，因为该种方式适用面更广（即使在有防火墙或代理的情况下也同样适用），使用更方便（配置更简单）。<br>采用HTTPS URLs地址clone/fetch/pull/push仓库时，事先无需对本地系统进行任何配置，只需要输入GitHub的账号和密码即可。不过如果每次都要手动输入账号密码，也是一件很繁琐的事情。</p>
+<p>好在已经有多个机制可以让操作不用这么麻烦。<br>在Mac系统中，在启用Keychain机制的情况下，首次输入GitHub账号密码后，认证信息就会自动保存到系统的Keychain中，下次再次访问仓库时就会自动读取Keychain中保存的认证信息。<br>在非Mac系统中，虽然没有Keychain机制，但是Git提供了credential helper机制，可以将账号密码以cache的形式在内存中缓存一段时间（默认15分钟），或者以文件的形式存储起来（~/.git-credentials）。当然，Mac系统如果不启用Keychain机制，也可以采用这种方式。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># cache credential in memory</div><div class="line">$ git config --global credential.helper cache</div><div class="line"># store credential in ~/.git-credential</div><div class="line">$ git config --global credential.helper store</div></pre></td></tr></table></figure>
+<p>在credential.helper设置为store的情况下，首次输入GitHub账号密码后，就会自动保存到~/.git-credentials文件中，保存形式为<a href="https://user:pass@github.com；下次再次访问仓库时就会自动读取~/.git-credentials中保存的认证信息。" target="_blank" rel="external">https://user:pass@github.com；下次再次访问仓库时就会自动读取~/.git-credentials中保存的认证信息。</a></p>
+<p>另一个需要说明的情况是，如果在GitHub中开启了2FA（two-factor authentication），那么在本地系统中输入GitHub账号密码时，不能输入原始的密码（即GitHub网站的登录密码），而是需要事先在GitHub网站中创建一个Personal access token，后续在访问代码仓库需要进行权限校验的时候，采用access token作为密码进行输入。</p>
+<h2 id="SSH-URLs"><a href="#SSH-URLs" class="headerlink" title="SSH URLs"></a>SSH URLs</h2><p>除了HTTPS URLs，还可以采用SSH URLs的方式访问GitHub代码仓库。<br>采用SSH URLs方式之前，需要先在本地计算机中生成SSH keypair（秘钥对，包括私钥和公钥）。默认情况下，生成的秘钥位于$HOME/.ssh/目录中，文件名称分别为id_rsa和id_rsa.pub，通常无需修改，保持默认即可。不过，如果一台计算机中存在多个秘钥对，就需要修改秘钥文件名，名称没有强制的命名规范，便于自己辨识即可。<br>如下是创建秘钥对的过程。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">➜ ssh-keygen -t rsa -b 4096 -C &quot;mail@debugtalk.com&quot;</div><div class="line">Generating public/private rsa key pair.</div><div class="line">Enter file in which to save the key (/Users/Leo/.ssh/id_rsa): /Users/Leo/.ssh/debugtalk_id_rsa</div><div class="line">Enter passphrase (empty for no passphrase): &lt;myPassphrase&gt;</div><div class="line">Enter same passphrase again: &lt;myPassphrase&gt;</div><div class="line">Your identification has been saved in /Users/Leo/.ssh/debugtalk_id_rsa.</div><div class="line">Your public key has been saved in /Users/Leo/.ssh/debugtalk_id_rsa.pub.</div><div class="line">The key fingerprint is:</div><div class="line">SHA256:jCyEEKjlCU1klROnuBg+UH08GJ1u252rQMADdD9kYMo mail@debugtalk.com</div><div class="line">The key&apos;s randomart image is:</div><div class="line">+---[RSA 4096]----+</div><div class="line">|+*BoBO+.         |</div><div class="line">|o=oO=**          |</div><div class="line">|++E.*+o.         |</div><div class="line">|+ooo +o+         |</div><div class="line">|.o. ..+oS. .     |</div><div class="line">|  .  o. . o      |</div><div class="line">|      .    .     |</div><div class="line">|       .  .      |</div><div class="line">|        ..       |</div><div class="line">+----[SHA256]-----+</div></pre></td></tr></table></figure>
+<p>在创建秘钥的过程中，系统还建议创建一个名为passphrase的东西，这是用来干嘛的呢？<br>首先，单独采用密码肯定是不够安全的。如果密码太简单，那么就很容易被暴力破解，如果密码太复杂，那么用户就很难记忆，记录到小本子里面更不安全。<br>因此，SSH keys诞生了。SSH秘钥对的可靠性非常高，被暴力破解的可能性基本没有。不过，这要求用户非常谨慎地保管好私钥，如果别人使用你的计算机时偷偷地将你的私钥拷走了，那么就好比是别人拿到了你家里的钥匙，也能随时打开你家的门。<br>基于以上情况，解决办法就是在SSH keys之外再增加一个密码，即passphrase。只有同时具备SSH private key和passphrase的情况下，才能通过SSH的权限校验，这就大大地增加了安全性。当然，这个passphrase也不是必须的，在创建秘钥对时也可以不设置passphrase。<br>另外，如果每次权限校验时都要输入passphrase，这也是挺麻烦的。好在我们不用再担心这个问题，因为ssh-agent可以帮我们记住passphrase，Mac系统的Keychain也可以记住passphrase，这样我们在同一台计算机中就不用重新输入密码了。<br>秘钥对创建好以后，私钥存放于本地计算机（~/.ssh/id_rsa），将公钥（~/.ssh/id_rsa.pub）中的内容添加至GitHub账户。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># copy the contents of id_rsa.pub to the clipboard</div><div class="line">➜ pbcopy &lt; ~/.ssh/id_rsa.pub</div><div class="line"># paste to GitHub</div><div class="line"># Login GitHub, 【Settings】-&gt;【SSH and GPG keys】-&gt;【New SSH Key】</div></pre></td></tr></table></figure>
+<p>不过，如果此时检测本地计算机与GitHub的连接状态，会发现系统仍提示权限校验失败。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">➜ ssh -T git@github.com</div><div class="line">Permission denied (publickey).</div></pre></td></tr></table></figure>
+<p>这是因为在本地计算机与GitHub建立连接的时候，实际上是本机计算机的ssh-agent与GitHub服务器进行通信。虽然本地计算机有了私钥，但是ssh-agent并不知道私钥存储在哪儿。因此，要想正常使用秘钥对，需要先将私钥加入到本地计算机的ssh-agent中（添加过程中需要输入passphrase）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># start ssh-agent in the background</div><div class="line">➜ eval &quot;$(ssh-agent -s)&quot;</div><div class="line">Agent pid 78370</div><div class="line">➜ ssh-add ~/.ssh/id_rsa</div><div class="line">Enter passphrase for /Users/Leo/.ssh/id_rsa: &lt;myPassphrase&gt;</div><div class="line">Identity added: /Users/Leo/.ssh/id_rsa (/Users/Leo/.ssh/id_rsa)</div></pre></td></tr></table></figure>
+<p>添加完成后，就可以查看到当前计算机中存储的密钥。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">➜ ssh-add -l</div><div class="line">4096 SHA256:xRg49AgTxxxxxxxx8q2SPPOfxxxxxxxxRlBY /Users/Leo/.ssh/id_rsa (RSA)</div></pre></td></tr></table></figure>
+<p>再次检测本地计算机与GitHub的连接状态，校验就正常通过了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">➜ ssh -T git@github.com</div><div class="line">Hi leolee! You&apos;ve successfully authenticated, but GitHub does not provide shell access.</div></pre></td></tr></table></figure>
+<p>后续再进行clone/fetch/pull/push操作时，就可以正常访问GitHub代码仓库了，并且也不需要再重新输入账号密码。<br>而且，将私钥加入ssh-agent后，即使删除私钥文件，本地计算机仍可以正常访问GitHub代码仓库。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">➜ rm -rf ~/.ssh</div><div class="line">➜ ssh-add -l</div><div class="line">4096 SHA256:xRg49AgTxxxxxxxx8q2SPPOfxxxxxxxxRlBY /Users/Leo/.ssh/id_rsa (RSA)</div><div class="line">➜ ssh -T git@github.com</div><div class="line">The authenticity of host &apos;github.com (192.30.252.130)&apos; can&apos;t be established.</div><div class="line">RSA key fingerprint is SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8.</div><div class="line">Are you sure you want to continue connecting (yes/no)? yes</div><div class="line">Warning: Permanently added &apos;github.com,192.30.252.130&apos; (RSA) to the list of known hosts.</div><div class="line">Hi leolee! You&apos;ve successfully authenticated, but GitHub does not provide shell access.</div></pre></td></tr></table></figure>
+<p>只有执行ssh-add -D或ssh-add -d pub_key命令，将私钥从ssh-agent删除后，认证信息才会失效。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">➜ ssh-add -d ~/.ssh/id_rsa.pub</div><div class="line">Identity removed: /Users/Leo/.ssh/id_rsa.pub (mail@debugtalk.com)</div><div class="line">➜ ssh-add -l</div><div class="line">The agent has no identities.</div><div class="line">➜ ssh -T git@github.com</div><div class="line">Permission denied (publickey).</div></pre></td></tr></table></figure>
+<p>同时使用多个GitHub账号<br>熟悉了HTTPS URLs和SSH URLs这两种校验方式之后，我们再来看之前遇到的问题。要想在一台计算机上同时使用多个GitHub账号访问不同的仓库，需要怎么做呢？<br>为了更好地演示，现假设有两个GitHub账号，debugtalk和leolee，在两个账号中各自有一个仓库，debugtalk/DroidMeter和DebugTalk/MobileStore（公司私有库）。<br>前面已经说过，HTTPS URLs和SSH URLs对应着两套独立的权限校验方式，因此这两套方式应该是都能单独实现我们的需求的。<br>不过在详细讲解Git权限校验的问题之前，我们先来回顾下Git配置文件的优先级。<br>Git配置存储位置及其优先级<br>Unix-like系统中，保存Git用户信息的主要有3个地方（Mac系统多一个Keychain）：<br>/etc/gitconfig：存储当前系统所有用户的git配置信息，使用带有–system选项的git config时，配置信息会写入该文件；<br>~/.gitconfig或~/.config/git/config：存储当前用户的git配置信息，使用带有–global选项的git config时，配置信息会写入该文件；<br>Keychain Access：在开启Keychain机制的情况下，进行权限校验后会自动将账号密码保存至Keychain Access。<br>仓库的Git目录中的config文件（即repo/.git/config）：存储当前仓库的git配置信息，在仓库中使用带有–local选项的git config时，配置信息会写入该文件；<br>在优先级方面，以上4个配置项的优先级从上往下依次上升，即repo/.git/config的优先级最高，然后Keychain Access会覆盖~/.gitconfig中的配置，~/.gitconfig会覆盖/etc/gitconfig中的配置。<br>基于SSH协议实现多账号共存<br>先来看下如何采用SSH URLs实现我们的需求。<br>在处理多账号共存问题之前，两个账号均已分别创建SSH秘钥对，并且SSH-key均已加入本地计算机的ssh-agent。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">➜ ssh-add -l</div><div class="line">4096 SHA256:lqujbjkWM1xxxxxxxxxxG6ERK6DNYj9tXExxxxxx8ew /Users/Leo/.ssh/debugtalk_id_rsa (RSA)</div><div class="line">4096 SHA256:II2O9vZutdQr8xxxxxxxxxxD7EYvxxxxxxbynx2hHtg /Users/Leo/.ssh/id_rsa (RSA)</div></pre></td></tr></table></figure>
+<p>在详细讲解多账号共存的问题之前，我们先来回想下平时在Terminal中与GitHub仓库进行交互的场景。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">➜  DroidMeter git:(master) git pull</div><div class="line">Already up-to-date.</div><div class="line">➜  DroidMeter git:(master) touch README.md</div><div class="line">➜  DroidMeter git:(master) ✗ git add .</div><div class="line">➜  DroidMeter git:(master) ✗ git commit -m &quot;add README&quot;</div><div class="line">➜  DroidMeter git:(master) git push</div><div class="line">Counting objects: 3, done.</div><div class="line">Delta compression using up to 4 threads.</div><div class="line">Compressing objects: 100% (2/2), done.</div><div class="line">Writing objects: 100% (3/3), 310 bytes | 0 bytes/s, done.</div><div class="line">Total 3 (delta 0), reused 0 (delta 0)</div><div class="line">To git@debugtalk:debugtalk/DroidMeter.git</div><div class="line">   7df6839..68d085b  master -&gt; master</div></pre></td></tr></table></figure>
+<p>在操作过程中，本地计算机的ssh-agent与GitHub服务器建立了连接，并进行了账号权限校验。<br>当本地计算机只有一个GitHub账号时，这个行为并不难理解，系统应该会采用这个唯一的GitHub账号进行操作。那如果本地计算机中有多个Github账号时，系统是根据什么来判断应该选择哪个账号呢？<br>实际情况是，系统没法进行判断。系统只会有一个默认的账号，然后采用这个默认的账号去操作所有的代码仓库，当账号与仓库不匹配时，就会报权限校验失败的错误。<br>那要怎样才能让系统正确区分账号呢？这就需要我们手动进行配置，配置文件即是~/.ssh/config。<br>创建~/.ssh/config文件，在其中填写如下内容。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"># debugtalk</div><div class="line">Host debugtalk</div><div class="line">    HostName github.com</div><div class="line">    User git</div><div class="line">    IdentityFile ~/.ssh/id_rsa</div><div class="line"># DT</div><div class="line">Host leolee</div><div class="line">    HostName github.com</div><div class="line">    User git</div><div class="line">    IdentityFile ~/.ssh/dt_id_rsa</div></pre></td></tr></table></figure>
+<p>要理解以上配置文件的含义并不难，我们可以对比看下两个项目的SSH URLs：<br>1<br>2<br>git@github.com:debugtalk/DroidMeter.git<br>git@github.com:DTSZ/Store_Android.git<br>其中，git是本地ssh-agent与GitHub服务器建立SSH连接采用的用户名（即User），github.com是GitHub服务器的主机（即HostName）。<br>可以看出，如果采用原始的SSH URLs，由于User和HostName都相同，本地计算机并不知道应该采用哪个SSH-key去建立连接。<br>因此，通过创建~/.ssh/config文件，在Host中进行区分，然后经过CNAME映射到HostName，然后分别指向不同的SSH-key，即IdentityFile。由于HostName才是真正指定GitHub服务器主机的字段，因此这么配置不会对本地ssh-agent连接GitHub主机产生影响，再加上Host别名指向了不同的SSH-key，从而实现了对两个GitHub账号的分离。<br>配置完毕后，两个GitHub账号就可以通过Host别名来进行区分了。后续再与GitHub服务器进行通信时，就可以采用Host别名代替原先的github.com。例如，测试本地ssh-agent与GitHub服务器的连通性时，可采用如下方式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">➜ ssh -T git@debugtalk</div><div class="line">Hi debugtalk! You have successfully authenticated, but GitHub does not provide shell access.</div><div class="line">➜ ssh -T git@leolee</div><div class="line">Hi leolee! You have successfully authenticated, but GitHub does not provide shell access.</div></pre></td></tr></table></figure>
+<p>可以看出，此时两个账号各司其职，不会再出现混淆的情况。<br>不过，我们还遗漏了很重要的一点。在本地代码仓库中执行push/pull/fetch等操作的时候，命令中并不会包含Host信息，那系统怎么知道我们要采用哪个GitHub账号进行操作呢？<br>答案是，系统还是没法判断，需要我们进行配置指定。<br>显然，不同的仓库可能对应着不同的GitHub账号，因此这个配置不能配置成全局的，而只能在各个项目中分别进行配置，即repo/.git/config文件。<br>配置的方式如下：<br>在debugtalk/DroidMeter仓库中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">➜ git remote add origin git@debugtalk:debugtalk/DroidMeter.git</div></pre></td></tr></table></figure>
+<p>在DebugTalk/MobileStore.git仓库中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">➜ git remote add origin git@leolee:DebugTalk/MobileStore.git</div></pre></td></tr></table></figure>
+<p>配置的原理也很容易理解，就是将仓库的Host更换为之前设置的别名。添加完毕后，后续再在两个仓库中执行任何git操作时，系统就可以选择正确的SSH-key与GitHub服务器进行交互了。<br>基于HTTPS协议实现多账号共存<br>再来看下如何采用HTTPS URLs实现我们的需求。<br>有了前面的经验，我们的思路就清晰了许多。采用HTTPS URLs的方式进行Git权限校验后，系统会将GitHub账号密码存储到Keychain中（Mac系统），或者存储到~/.git-credentials文件中（Git credential helper）。<br>不管是存储到哪里，我们面临的问题都是相同的，即如何在代码仓库中区分采用哪个GitHub账号。<br>配置的方式其实也很简单：<br>在debugtalk/DroidMeter仓库中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">➜ git remote add origin https://debugtalk@github.com/debugtalk/DroidMeter.git</div></pre></td></tr></table></figure>
+<p>在DebugTalk/MobileStore.git仓库中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">➜ git remote add origin https://leolee@github.com/DebugTalk/MobileStore.git</div></pre></td></tr></table></figure>
+<p>配置的原理也很容易理解，将GitHub用户名添加到仓库的Git地址中，这样在执行git命令的时候，系统就会采用指定的GitHub用户名去Keychain或~/.git-credentials中寻找对应的认证信息，账号使用错乱的问题也就不复存在了。<br>Done!</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/06/08/git-ssh和https授权/">Git Ssh和https授权</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 leibosite 的个人博客">leibosite</a></p>
+        <p><span>发布时间:</span>2017年06月08日 - 18时48分</p>
+        <p><span>最后更新:</span>2017年06月08日 - 18时50分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/06/08/git-ssh和https授权/" title="Git Ssh和https授权">https://leibosite.github.io/2017/06/08/git-ssh和https授权/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://leibosite.github.io/2017/06/08/git-ssh和https授权/　　作者: leibosite" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+  
+    <a href="/2017/06/05/git-授权校验失败之谜/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Git 授权校验失败之谜</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTPS-URLs"><span class="toc-number">1.</span> <span class="toc-text">HTTPS URLs</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSH-URLs"><span class="toc-number">2.</span> <span class="toc-text">SSH URLs</span></a></li></ol>
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
+
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="2017/06/08/git-ssh和https授权/" data-title="Git Ssh和https授权" data-url="https://leibosite.github.io/2017/06/08/git-ssh和https授权/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"null"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = '/js/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+</div>
+
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2017/06/05/git-授权校验失败之谜/" title="下一篇: Git 授权校验失败之谜">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git-ssh和https授权/">Git Ssh和https授权</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/05/git-授权校验失败之谜/">Git 授权校验失败之谜</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/17/music/">Music</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/16/前端跨域及跨域解决方案/">前端跨域及跨域解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/27/redis_集群优点/">redis_集群优点</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/20/富爸爸原文摘录及读后感-1/">资产与负债的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/06/nodejs-测试框架Mocha/">Nodejs 测试框架 Mocha</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/25/1、JavaScript学习：书写可维护的的代码/">1、JavaScript学习：书写可维护的的代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/14/redis-单例服务器搭建/">Redis 单例服务器搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/10/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/10/桃花源记/">桃花源记</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/09/创建mysql触发器/">创建 Mysql 跨库触发器</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/06/使用nodeJs-生成二维码/">使用nodeJs 生成二维码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/05/兰亭集序/">兰亭集序</a></li></ul>
+    <script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2017 leibosite
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/luuman/hexo-theme-spfk" target="_blank">spfk</a> by luuman
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >blog到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    <script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 24;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>
